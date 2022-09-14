@@ -189,7 +189,7 @@ int main() {
 	struct Data {
 		int a 	    = 1;	// 4 bytes
 		int b  	    = 2;	// 4 bytes
-		char c 	    = 0xC3;	// 1 byte
+		char c 	    = 0x1C;	// 1 byte
 		long long d = 44444444;	// 8 bytes
 		int *e;			// 8 bytes
 	};
