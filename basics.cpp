@@ -1,9 +1,14 @@
 #include <iostream>
+#include <iomanip>
 #include <string>
 #include <vector>
 #include <limits>
 #include <algorithm>
 using namespace std;
+
+
+// Macro for something later
+//#define HEX(x) setw(2)<<setfill('0')<<hex<<(int)(x)
 
 
 // Globals / Constants
@@ -59,6 +64,9 @@ int main() {
 	long 	     var_long;  // 32bit signed (same as int)
 	long long    var_ll;    // 64bit signed (-2^63 to 2^63 - 1)
 	
+	// Values are unknown if left uninitialized
+	cout<<"var_short: "<<var_short<<"\nvar_int: "<<var_int<<"\nvar_ll: "<<var_ll<<endl;
+
 	unsigned int var_uint;  // 32bit unsigned (0 to 2^32)
 
 	// Floating Point
@@ -157,6 +165,42 @@ int main() {
 			return a.a > a.b;
 		}
 	);
+
+
+	// Pointers / Memory Management
+	int *a, *b, c; 	// Create int pointers (Unknown value. Both addr and value)
+//	cout<<"location of 'a': "<<a<<" value = "<<*a<<endl; // UNSAFE DEREFERENCE!!!
+//	cout<<"location of 'b': "<<b<<" value = "<<*b<<endl;
+
+	a = new int;	// Allocated space for an int on the heap
+	
+	*a = 123;	// Change memory at the location being pointed to (Dereference)
+	b = a;		// Change where in memory is being pointed to
+
+	// Ptr value vs dereference
+	cout<<"location of 'a': "<<a<<" value = "<<*a<<endl;
+	cout<<"location of 'b': "<<b<<" value = "<<*b<<endl;
+	cout<<"location of 'c': "<<&c<<" value = "<<c<<endl;
+
+	// Must delete allocated memory to avoid leaks
+	delete a;
+	
+	// Pointer Manipulation	
+	struct Data {
+		int a 	    = 1;	// 4 bytes
+		int b  	    = 2;	// 4 bytes
+		char c 	    = 0xC3;	// 1 byte
+		long long d = 44444444;	// 8 bytes
+		int *e;			// 8 bytes
+	};
+
+	Data D;		// Declare struct
+
+	char *bytes = reinterpret_cast<char*>(&D); // Cast location of D to a char ptr
+						   
+	for(int i=0; i<sizeof(Data); ++i)	// Look at raw bytes of D
+		cout<<setw(2)<<setfill('0')<<hex<<(int)(bytes[i])<<" ";
+	cout<<endl;
 
 }
 
