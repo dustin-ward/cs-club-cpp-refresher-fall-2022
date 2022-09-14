@@ -24,8 +24,6 @@
  * ####################################################################
  */
 
-using namespace std;
-
 // This is the filename for the data
 #define FILENAME "teamlist.txt"
 
