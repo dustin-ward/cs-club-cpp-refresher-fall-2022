@@ -4,6 +4,7 @@
 #include <vector>
 #include <limits>
 #include <algorithm>
+#include <fstream>
 using namespace std;
 
 
@@ -122,12 +123,32 @@ int main() {
 	cout<<"Add function after:\n"<<"x = "<<x<<"\ny = "<<y<<endl;
 
 
+	// Reading from and Writing to files
+	ofstream file_out;		// Create input filestream. fstream can do both r/w
+	file_out.open("./testfile.txt");	// Open file from filename
+	
+	file_out << "DATA\nTO\nBE\nWRITTEN\n";	// Write data to file
+	file_out.close();
+
+	ifstream file_in;
+	file_in.open("./testfile.txt");
+	string line;			// Keep reading a string from file until
+	while(getline(file_in, line))	// we reach EOF. The while condition will
+		cout<<line<<" ";	// return false when EOF is read.
+	cout<<endl;
+
+	file_in.close();		// Close file
+
+
 	// STL
 	// From vector.h
 	vector<int> array;		// Resizeable array
 	vector<int> filled_array(5, 1);	// Create size 5 filled with 1's
 	
+	filled_array.push_back(3);	// Add a new element to the end of the array
+	filled_array.pop_back();	// Remove the last element from the array
 	filled_array.size();		// Returns size
+	filled_array.empty();		// Returns true if the vector is empty
 	
 	for(int i:filled_array)		// Range-based loop.
 		cout<<i<<" ";		// Interates over all elements
