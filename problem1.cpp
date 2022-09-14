@@ -23,79 +23,12 @@
  *
  * ####################################################################
  */
-#include <bits/stdc++.h>
+
 using namespace std;
 
+// This is the filename for the data
 #define FILENAME "teamlist.txt"
 
-typedef unsigned int uint;
-
-struct HockeyTeam {
-	string location;
-	string name;
-	string shorthand;
-
-	uint wins;
-	uint losses;
-	uint OTlosses;
-};
-
 int main() {
-	ifstream file;
-	file.open(FILENAME);
 
-	// Vector to store an unknown number of teams
-	vector<HockeyTeam> teams;
-
-	// Read in until the end of the file.
-	// Store each team in a struct, then add to the vector.
-	string temp, garbage;
-	while(cin>>temp) {	// Read first string in line. Will stop if EOF
-		HockeyTeam H;
-		H.location = temp; // Use the first value I already read.
-		cin >> H.name	   // Read the rest of the data...
-		    >> H.shorthand
-		    >> H.wins
-		    >> garbage	// Garbage string to avoid reading the '-' in the input
-		    >> H.losses
-		    >> garbage
-		    >> H.OTlosses;
-
-		// Add to vector
-		teams.push_back(H);
-	}
-
-	// Another way of reading the data looks like this:
-	/*
-	 * string line;
-	 * while(getline(file, line)) {
-	 * 	istringstream iss(line);
-	 * 	string garbage;
-	 *
-	 * 	HockeyTeam H;
-	 * 	iss >> H.location
-	 * 	    >> H.name
-	 * 	    >> H.shorthand
-	 * 	    >> H.wins
-	 * 	    >> garbage
-	 * 	    >> H.losses
-	 * 	    >> garbage
-	 * 	    >> H.OTlosses;
-	 *	
-	 *	teams.push_back(H); 	    
-	 */
-
-	// Use STL sort to sort by wins-otlosses-location
-	sort(teams.begin(), teams.end(), [](const HockeyTeam& a, const HockeyTeam &b) {
-		if(a.wins == b.wins) {
-			if(a.OTlosses == b.OTlosses)
-				return a.location < b.location;
-			else
-				return a.OTlosses > b.OTlosses; 
-		}
-		else
-			return a.wins > b.wins;
-	});
-
-	printWinners(teams);
 }
