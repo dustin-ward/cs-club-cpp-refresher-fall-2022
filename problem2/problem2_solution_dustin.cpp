@@ -46,7 +46,7 @@ class myVector {
 		myVector() {
 			current_size = 0;
 			max_size = INIT_SIZE;
-			data = new int(INIT_SIZE);
+			data = new int[INIT_SIZE];
 		}
 
 		// Destructor function
@@ -55,7 +55,7 @@ class myVector {
 		// from memory. Any dynamic memory created by
 		// this class should be cleaned up here.
 		~myVector() {
-			delete data;
+			delete[] data;
 		}
 
 		// Square-bracket operator overload
@@ -80,11 +80,11 @@ class myVector {
 		// should dynamically resize the vector to make room.
 		void push_back(int val) {
 			if(current_size == max_size) {
-				int* new_arr = new int(max_size*2);
+				int* new_arr = new int[max_size*2];
 				for(int i=0; i<current_size; i++)
 					new_arr[i] = data[i];
 
-				delete data;
+				delete[] data;
 				data = new_arr;
 
 				max_size *= 2;
