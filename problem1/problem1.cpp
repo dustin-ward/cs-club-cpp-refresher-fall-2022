@@ -27,6 +27,11 @@
 // This is the filename for the data
 #define FILENAME "teamlist.txt"
 
+// HINT: Consider using this struct to hold information about each team
+struct HockeyTeam {
+
+};
+
 int main() {
 
 }
