@@ -8,12 +8,8 @@
 using namespace std;
 
 
-// Macro for something later
-//#define HEX(x) setw(2)<<setfill('0')<<hex<<(int)(x)
-
-
 // Globals / Constants
-#define CONSTANT_VALUE = 9999;
+#define CONSTANT_VALUE 9999
 const int GLOBAL_VARIABLE = 9998;
 
 
@@ -86,10 +82,23 @@ int main() {
 	cout<<"Min long double range: " << std::numeric_limits<long double>::lowest()<<endl;
 	cout<<"Smallest long double: " << std::numeric_limits<long double>::min()<<endl;
 
+	
+	// Non-Primitve
+	string var_string;		// Technically an array of characters
+	var_string = "Hello World!";
+	cout<<var_string[6]<<endl;	// Output char at position 6 ('W')
+
 	// Arrays
 	int int_array[10]; 			// Fixed size array
 	char char_array[3] = {'a', 'b', 'c'};	// Declare and assign
 	cout<<"char_array[0] = "<<char_array[0]<<endl;
+
+	// 2D Arrays
+	char twoDArray[3][3] = {{'a','b','c'},	// Indexed by [row][col]
+				{'d','e','f'},
+				{'g','h','i'}};
+	cout<<twoDArray[1][1]<<endl;
+
 
 	// Structs
 	MyStruct S;
@@ -124,7 +133,7 @@ int main() {
 
 
 	// Reading from and Writing to files
-	ofstream file_out;		// Create input filestream. fstream can do both r/w
+	ofstream file_out;					// Create input filestream. fstream can do both r/w
 	file_out.open("./testfile.txt");	// Open file from filename
 	
 	file_out << "DATA\nTO\nBE\nWRITTEN\n";	// Write data to file
@@ -132,9 +141,9 @@ int main() {
 
 	ifstream file_in;
 	file_in.open("./testfile.txt");
-	string line;			// Keep reading a string from file until
+	string line;					// Keep reading a string from file until
 	while(getline(file_in, line))	// we reach EOF. The while condition will
-		cout<<line<<" ";	// return false when EOF is read.
+		cout<<line<<" ";			// return false when EOF is read.
 	cout<<endl;
 
 	file_in.close();		// Close file
@@ -142,7 +151,7 @@ int main() {
 
 	// STL
 	// From vector.h
-	vector<int> array;		// Resizeable array
+	vector<int> array;				// Resizeable array
 	vector<int> filled_array(5, 1);	// Create size 5 filled with 1's
 	
 	filled_array.push_back(3);	// Add a new element to the end of the array
@@ -151,29 +160,19 @@ int main() {
 	filled_array.empty();		// Returns true if the vector is empty
 	
 	for(int i:filled_array)		// Range-based loop.
-		cout<<i<<" ";		// Interates over all elements
+		cout<<i<<" ";			// Interates over all elements
 	cout<<endl;
 
 	for(int &i:filled_array)	// Use reference to mutate
 		i++;
 
+	// Other useful containers
+	map<string,int> my_map;		// Key/Value pairs. Sorted by Key
+	set<int> my_set;			// Similar to map. Just Key.
+								// Use cplusplus.com/reference to see
+								// associated container functions.
 
-	// Iterators
-	std::vector<int>::iterator it_begin = array.begin(); // Iterator to 1st element
-	auto it_end = end(array);			     // Another way to get iterator
-	
-	// From algorithm.h
-	sort(it_begin, it_end);    		// STL sort function ascending
-	sort(array.rbegin(), array.rend()); 	// Sort descending
-	reverse(it_begin, it_end); 		// Reverse vector.
 
-	int value;
-	auto it = lower_bound(it_begin, it_end, value); // First element >= value
-
-	it = upper_bound(it_begin, it_end, value);	// First element > value
-	int pos = it - it_begin;			// How to get pos idx
-
-	
 	// Custom Sort
 	vector<MyStruct> V(100, S);
 	sort(V.begin(), V.end());
@@ -186,43 +185,6 @@ int main() {
 			return a.a > a.b;
 		}
 	);
-
-
-	// Pointers / Memory Management
-	int *a, *b, c; 	// Create int pointers (Unknown value. Both addr and value)
-//	cout<<"location of 'a': "<<a<<" value = "<<*a<<endl; // UNSAFE DEREFERENCE!!!
-//	cout<<"location of 'b': "<<b<<" value = "<<*b<<endl;
-
-	a = new int;	// Allocated space for an int on the heap
-	
-	*a = 123;	// Change memory at the location being pointed to (Dereference)
-	b = a;		// Change where in memory is being pointed to
-
-	// Ptr value vs dereference
-	cout<<"location of 'a': "<<a<<" value = "<<*a<<endl;
-	cout<<"location of 'b': "<<b<<" value = "<<*b<<endl;
-	cout<<"location of 'c': "<<&c<<" value = "<<c<<endl;
-
-	// Must delete allocated memory to avoid leaks
-	delete a;
-	
-	// Pointer Manipulation	
-	struct Data {
-		int a 	    = 1;	// 4 bytes
-		int b  	    = 2;	// 4 bytes
-		char c 	    = 0x1C;	// 1 byte
-		long long d = 44444444;	// 8 bytes
-		int *e;			// 8 bytes
-	};
-
-	Data D;		// Declare struct
-
-	char *bytes = reinterpret_cast<char*>(&D); // Cast location of D to a char ptr
-						   
-	for(int i=0; i<sizeof(Data); ++i)	// Look at raw bytes of D
-		cout<<setw(2)<<setfill('0')<<hex<<(int)(bytes[i])<<" ";
-	cout<<endl;
-
 }
 
 // Sad function all the way at the bottom :(
