@@ -1,2 +1,4 @@
 testfile.txt
 a.out
+.vscode
+.clang_format
