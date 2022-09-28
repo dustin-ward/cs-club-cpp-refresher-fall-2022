@@ -39,8 +39,7 @@ std::vector<std::vector<std::string>> teamRanking::readFile(std::string fileName
     std::string temp = "";
     for (int i = 0; i < 4; i++) {
       input >> temp;
-      teaminfo.push_back(
-          temp);  //adds part of the line from the file into vector
+      teaminfo.push_back(temp);  //adds part of the line from the file into vector
       temp = "";
     }
     cleanInput(teaminfo);  // cleans part of the input
@@ -59,8 +58,7 @@ void teamRanking::cleanInput(std::vector<std::string>& teaminfo) {
   for (unsigned int i = 0; i < stat.size() + 1; i++) { // uses stat.size()+1 because we are looking for the null char
     char a = stat[i];  //used for debugger
     if (stat[i] == '-' || stat[i] == '\n' || stat[i] == ' ') {
-      teaminfo.push_back(
-          stat.substr(0, i));  //makes a substring and adds it to the vector
+      teaminfo.push_back(stat.substr(0, i));  //makes a substring and adds it to the vector
       stat.erase(stat.begin(), stat.begin() + i + 1); //erase part of the info needs to be cleaned that is not longer needed
       i = 0;  //sets i back to 0 to start going through the string at begininng again
     }
@@ -75,7 +73,7 @@ void teamRanking::cleanInput(std::vector<std::string>& teaminfo) {
 void teamRanking::teamSorting(std::vector<std::vector<std::string>>& teamList) {
   // 0 = location of team, 3 = win, 5 = OT loses
   sort(teamList.begin(), teamList.end(),
-       [](const std::vector<std::string>& a, std::vector<std::string>& b) {
+       [](const std::vector<std::string>& a, std::vector<std::string>& b) { //sorts the 2D vectors using a lambda function
          if (a[3] == b[3]) {      //checks wins
            if (a[5] == b[5])      // checks OT loses
              return a[0] < b[0];  // returns location
@@ -83,7 +81,7 @@ void teamRanking::teamSorting(std::vector<std::vector<std::string>>& teamList) {
              return a[5] > b[5];  // return OT loses
          } else
            return a[3] > b[3];  //returns wins
-       });                      //sorts the 2D vectors using a lambda function
+       });
 }
 
 //displays the top 3 teams
