@@ -5,12 +5,6 @@
 #include <vector>
 using namespace std;
 
-
-// Macro for something later
-//#define HEX(x) setw(2)<<setfill('0')<<hex<<(int)(x)
-
-
-// Main funciton
 int main() {
 	
 	// Pointers / Memory Management
@@ -30,6 +24,22 @@ int main() {
 
 	// Must delete allocated memory to avoid leaks
 	delete a;
+
+    // Dynamic Array
+    int length = 5;
+    int* arr = new int[length];
+    delete[] arr;
+
+    // 2-D Dynamic Array
+    int N = 3, M = 4;
+    int** arr2d = new int*[N];
+    for(int i=0; i<N; ++i)
+        arr2d[i] = new int[M];
+
+    // Cleanup
+    for(int i=0; i<N; ++i)
+        delete[] arr2d[i];
+    delete[] arr2d;
 
 
 	// Pointers to custom data
@@ -89,4 +99,32 @@ int main() {
 		cout<<setw(2)<<setfill('0')<<hex<<(int)(bytes[i])<<" ";
 	cout<<endl;
 	
+}
+
+class BaseClass {};
+
+class MyClass : public BaseClass {
+    public:
+        MyClass() {
+            privateData = new int;
+        };
+
+        ~MyClass() {
+            delete privateData;
+        };
+
+        void publicFunc();
+    
+        friend int operator+(MyClass&, MyClass&);
+
+    private:
+        int* privateData;
+};
+
+void MyClass::publicFunc() {
+    // implementation here
+}
+
+int operator+(MyClass &a, MyClass &b) {
+    return *a.privateData + *b.privateData;
 }
